@@ -1,4 +1,9 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import React from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import styled, { createGlobalStyle } from "styled-components";
+import Home from "./pages/Home";
+import RequireApiKey from "./routes/RequireApiKey";
+import { Setup } from "./pages/Setup";
 
 const GlobalStyle = createGlobalStyle`
     html, body {
@@ -23,13 +28,23 @@ const Wrapper = styled.div`
 `;
 
 export const App = () => {
-
     return (
-        <Wrapper>
-            <GlobalStyle />
-            <div>
-                Hello World
-            </div>
-        </Wrapper>
-    )
+        <BrowserRouter>
+            <Wrapper>
+                <GlobalStyle />
+                <div>Hello World</div>
+                <Routes>
+                    <Route path="/setup" element={<Setup />} />
+                    <Route
+                        path="/"
+                        element={
+                            <RequireApiKey>
+                                <Home />
+                            </RequireApiKey>
+                        }
+                    />
+                </Routes>
+            </Wrapper>
+        </BrowserRouter>
+    );
 };
