@@ -8,8 +8,9 @@ import {
 } from "formik";
 import * as React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { BasicAuth } from "../utils/BasicAuth";
 
-interface Values {
+export interface Values {
     username: String;
     password: String;
 }
@@ -34,21 +35,22 @@ export const Setup = () => {
         if (!values.password) {
             errors.password = "Required";
         }
-        if (values.username && values.password) {
-            fetch("https://api.gls-group.eu/public/v1/tracking/references/", {
-                method: "GET",
-                headers: {
-                    Authorization: `Basic ${BasicAuth(values)}`,
-                },
-            })
-                .then((response) => {})
-                .catch((err) => {
-                    if (err.status === 401) {
-                        errors = { username: "Wrong Creds" };
-                        console.log("aasdasd");
-                    }
-                });
-        }
+        // TODO: proper handling checks at the setup.
+        //     if (values.username && values.password) {
+        //         fetch("https://api.gls-group.eu/public/v1/tracking/references/", {
+        //             method: "GET",
+        //             headers: {
+        //                 Authorization: `Basic ${BasicAuth(values)}`,
+        //             },
+        //         })
+        //             .then((response) => {})
+        //             .catch((err) => {
+        //                 if (err.status === 401) {
+        //                     errors = { username: "Wrong Creds" };
+        //                     console.log("aasdasd");
+        //                 }
+        //             });
+        //     }
         return errors;
     };
 
@@ -80,8 +82,3 @@ export const Setup = () => {
         </>
     );
 };
-function BasicAuth(values: Values) {
-    return JSON.stringify(
-        Buffer.from(values.username + ":" + values.password).toString("base64")
-    );
-}
