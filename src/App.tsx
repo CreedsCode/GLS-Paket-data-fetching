@@ -4,6 +4,7 @@ import styled, { createGlobalStyle } from "styled-components";
 import Home from "./pages/Home";
 import RequireApiKey from "./routes/RequireApiKey";
 import { Setup } from "./pages/Setup";
+import "./App.css";
 
 const GlobalStyle = createGlobalStyle`
     html, body {
